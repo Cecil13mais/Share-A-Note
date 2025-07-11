@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Reminder Calendar</title>
+  <style>
+    body {
+      background: #f4f4f4;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 60px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    .months {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 10px;
+    }
+
+    .months a {
+      background: #eaeaea;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+      text-decoration: none;
+      color: #333;
+      font-size: 1em;
+      display: block;
+      transition: background 0.3s ease;
+    }
+
+    .months a:hover {
+      background: #d0d0d0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Reminder Calendar</h1>
+    <div class="months">
+      <a href="calendar.html?month=0">January</a>
+      <a href="calendar.html?month=1">February</a>
+      <a href="calendar.html?month=2">March</a>
+      <a href="calendar.html?month=3">April</a>
+      <a href="calendar.html?month=4">May</a>
+      <a href="calendar.html?month=5">June</a>
+      <a href="calendar.html?month=6">July</a>
+      <a href="calendar.html?month=7">August</a>
+      <a href="calendar.html?month=8">September</a>
+      <a href="calendar.html?month=9">October</a>
+      <a href="calendar.html?month=10">November</a>
+      <a href="calendar.html?month=11">December</a>
+    </div>
+  </div>
+</body>
+</html>
