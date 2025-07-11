@@ -4,16 +4,40 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login - Share A Note</title>
-  <link rel="stylesheet" href="styles.css" />
   <style>
-    /* I was too lazy to chhange the the stylesheet so i override it */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
+      font-family: Arial, sans-serif;
       background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+      min-height: 100vh;
+    }
+
+    .banner {
+      background: transparent;
+      text-align: center;
+      padding: 40px 0 20px;
+      color: white;
+    }
+
+    .banner h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .banner p {
+      font-size: 1.2rem;
+      opacity: 0.9;
     }
 
     .login-container {
       max-width: 400px;
-      margin: 80px auto;
+      margin: 30px auto 60px;
       background: white;
       padding: 40px;
       border-radius: 15px;
@@ -76,38 +100,33 @@
       text-decoration: none;
     }
 
-    .header h1 {
-      color: white;
-      font-size: 3rem;
-      margin-bottom: 10px;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    @media (max-width: 500px) {
+      .banner h1 {
+        font-size: 2rem;
+      }
+
+      .login-container {
+        margin: 20px;
+        padding: 30px 20px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <h1>Share A Note</h1>
-      <p>Please log in to continue</p>
-    </div>
-
-    <div class="login-container">
-      <h2>Login</h2>
-      <form>
-        <div class="form-group">
-          <label for="username">Email or Username</label>
-          <input type="text" id="username" name="username" required />
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password" required />
-        </div>
-        <button type="submit" class="login-btn">Sign In</button>
-      </form>
-      <div class="footer-text">
-        Don't have an account? <a href="#">Sign up</a>
-      </div>
-    </div>
+  <div class="banner">
+    <h1>Share A Note</h1>
+    <p>Please log in to continue</p>
   </div>
-</body>
-</html>
+
+  <div class="login-container">
+    <h2>Login</h2>
+    <form>
+      <div class="form-group">
+        <label for="username">Email or Username</label>
+        <input type="text" id="username" name="username" required />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required />
+      </div>
+      <button type="submi
