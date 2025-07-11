@@ -2,11 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login Page</title>
-  <link rel="stylesheet" href="styles.css" /> <!-- Link your stylesheet here -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - Share A Note</title>
+  <link rel="stylesheet" href="styles.css" />
   <style>
-    /* Login-specific styles */
+    /* Override purple gradients with green */
+    body {
+      background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+    }
+
     .login-container {
       max-width: 400px;
       margin: 80px auto;
@@ -19,7 +23,7 @@
     .login-container h2 {
       text-align: center;
       margin-bottom: 30px;
-      color: #4a5568;
+      color: #2f855a;
     }
 
     .form-group {
@@ -43,7 +47,7 @@
 
     .login-btn {
       width: 100%;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
       color: white;
       padding: 12px;
       font-size: 1.1rem;
@@ -68,16 +72,23 @@
     }
 
     .footer-text a {
-      color: #667eea;
+      color: #2f855a;
       text-decoration: none;
+    }
+
+    .header h1 {
+      color: white;
+      font-size: 3rem;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
-      <h1>Welcome Back</h1>
-      <p>Please login to continue</p>
+      <h1>Share A Note</h1>
+      <p>Please log in to continue</p>
     </div>
 
     <div class="login-container">
