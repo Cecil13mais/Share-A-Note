@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Reminder Calendar</title>
+  <style>
+    body {
+      background: #f4f4f4;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 60px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    .months {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 10px;
+    }
+
+    .months button {
+      background: #eaeaea;
+      border: none;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      font-size: 1em;
+    }
+
+    .months button:hover {
+      background: #d0d0d0;
+    }
+
+    .reminder-form {
+      margin-top: 30px;
+      display: none;
+    }
+
+    .reminder-form h2 {
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    .reminder-form label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    .reminder-form input,
+    .reminder-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+    }
+
+    .reminder-form button {
+      background: #38a169;
+      color: white;
+      padding: 12px 20px;
+      font-size: 1em;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .reminder-form button:hover {
+      background: #2f855a;
+    }
+
+    .success-message {
+      color: green;
+      font-weight: bold;
+      margin-top: 10px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Reminder Calendar</h1>
+
+    <div class="months">
+      <button onclick="selectMonth('January')">January</button>
+      <button onclick="selectMonth('February')">February</button>
+      <button onclick="selectMonth('March')">March</button>
+      <button onclick="selectMonth('April')">April</button>
+      <button onclick="selectMonth('May')">May</button>
+      <button onclick="selectMonth('June')">June</button>
+      <button onclick="selectMonth('July')">July</button>
+      <button onclick="selectMonth('August')">August</button>
+      <button onclick="selectMonth('September')">September</button>
+      <button onclick="selectMonth('October')">October</button>
+      <button onclick="selectMonth('November')">November</button>
+      <button onclick="selectMonth('December')">December</button>
+    </div>
+
+    <div class="reminder-form" id="reminderForm">
+      <h2 id="formTitle">Add Reminder</h2>
+      <form onsubmit="saveReminder(event)">
+        <label for="reminderTitle">Title</label>
+        <input type="text" id="reminderTitle" required />
+
+        <label for="reminderDesc">Description</label>
+        <textarea id="reminderDesc" rows="4" required></textarea>
+
+        <label for="reminderDate">Date</label>
+        <input type="date" id="reminderDate" required />
+
+        <button type="submit">Save Reminder</button>
+      </form>
+      <div class="success-message" id="successMsg">Reminder saved successfully!</div>
+    </div>
+  </div>
+
+  <script>
+    function selectMonth(month) {
+      document.getElementById("reminderForm").style.display = "block";
+      document.getElementById("formTitle").textContent = "Add Reminder for " + month;
+      document.getElementById("successMsg").style.display = "none";
+    }
+
+    function saveReminder(event) {
+      event.preventDefault();
+      // In a real app, you'd send this data to a server
+      document.getElementById("successMsg").style.display = "block";
+      setTimeout(() => {
+        document.getElementById("successMsg").style.display = "none";
+      }, 3000);
+      event.target.reset();
+    }
+  </script>
+</body>
+</html>
