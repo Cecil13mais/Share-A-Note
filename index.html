@@ -3,54 +3,78 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Reminder Calendar</title>
+  <title>Share A Note - Reminder Calendar</title>
   <style>
     body {
-      background: #f4f4f4;
+      background: #f0fff4;
       font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .banner {
+      background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+      padding: 40px 0;
+      text-align: center;
+      color: white;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .banner h1 {
+      font-size: 3rem;
+      margin: 0;
     }
 
     .container {
       max-width: 700px;
-      margin: 60px auto;
-      background: #fff;
+      margin: 40px auto;
+      background: white;
       padding: 30px;
       border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
     }
 
-    h1 {
+    h2 {
       text-align: center;
-      margin-bottom: 30px;
-      color: #333;
+      margin-bottom: 20px;
+      color: #2f855a;
     }
 
     .months {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-      gap: 10px;
+      gap: 15px;
     }
 
     .months a {
-      background: #eaeaea;
-      border-radius: 8px;
-      padding: 10px;
+      background: #c6f6d5;
+      color: #22543d;
+      padding: 15px 0;
       text-align: center;
+      border-radius: 8px;
       text-decoration: none;
-      color: #333;
-      font-size: 1em;
-      display: block;
+      font-weight: bold;
       transition: background 0.3s ease;
     }
 
     .months a:hover {
-      background: #d0d0d0;
+      background: #9ae6b4;
+    }
+
+    @media (max-width: 500px) {
+      .banner h1 {
+        font-size: 2rem;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="banner">
+    <h1>Share A Note</h1>
+  </div>
+
   <div class="container">
-    <h1>Reminder Calendar</h1>
+    <h2>Select a Month</h2>
     <div class="months">
       <a href="calendar.html?month=0">January</a>
       <a href="calendar.html?month=1">February</a>
