@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Calendar - Share A Note</title>
+  <title>Share A Note Calendar</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -13,8 +13,8 @@
     }
 
     .banner {
-      background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
-      padding: 30px 0;
+      background: linear-gradient(135deg, #38a169, #2f855a);
+      padding: 40px 0;
       text-align: center;
       color: white;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -30,7 +30,7 @@
       margin: 40px auto;
       background: white;
       padding: 30px;
-      border-radius: 10px;
+      border-radius: 12px;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
     }
 
@@ -38,7 +38,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
     }
 
     .nav-btn {
@@ -46,10 +46,10 @@
       color: white;
       border: none;
       padding: 10px 16px;
-      border-radius: 5px;
+      border-radius: 6px;
       cursor: pointer;
       font-size: 1rem;
-      transition: background 0.2s;
+      transition: background 0.2s ease;
     }
 
     .nav-btn:hover {
@@ -58,7 +58,7 @@
 
     h2 {
       margin: 0;
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       color: #2f855a;
     }
 
@@ -71,10 +71,11 @@
     .day {
       text-align: center;
       font-weight: bold;
-      color: #4a5568;
+      background: #f0fff4;
+      color: #22543d;
       padding: 10px 0;
-      background: #e6fffa;
       border-radius: 5px;
+      border: 1px solid #c6f6d5;
     }
 
     .date {
@@ -84,6 +85,7 @@
       border-radius: 5px;
       color: #22543d;
       font-weight: bold;
+      border: 1px solid #9ae6b4;
     }
 
     .empty {
@@ -115,11 +117,81 @@
 </head>
 <body>
   <div class="banner">
-    <h1>Share A Note</h1>
+    <h1>Share A Note Calendar</h1>
   </div>
 
   <div class="container">
     <div class="header">
       <button class="nav-btn" onclick="changeMonth(-1)">← Prev</button>
-      <h2 id="calendarTitle">Calendar</h2>
-      <button clas
+      <h2 id="calendarTitle">Loading...</h2>
+      <button class="nav-btn" onclick="changeMonth(1)">Next →</button>
+    </div>
+
+    <div class="calendar" id="calendarGrid"></div>
+
+    <div class="back-link">
+      <a href="index.html">← Back to Month Selector</a>
+    </div>
+  </div>
+
+  <script>
+    const monthNames = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+    const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+    const urlParams = new URLSearchParams(window.location.search);
+    let month = parseInt(urlParams.get("month")) || new Date().getMonth();
+    let year = new Date().getFullYear();
+
+    const calendarTitle = document.getElementById("calendarTitle");
+    const calendarGrid = document.getElementById("calendarGrid");
+
+    function renderCalendar(month, year) {
+      calendarTitle.textContent = `${monthNames[month]} ${year}`;
+      calendarGrid.innerHTML = "";
+
+      // Weekday headers
+      for (let day of daysOfWeek) {
+        const dayEl = document.createElement("div");
+        dayEl.className = "day";
+        dayEl.textContent = day;
+        calendarGrid.appendChild(dayEl);
+      }
+
+      const firstDay = new Date(year, month, 1).getDay();
+      const totalDays = new Date(year, month + 1, 0).getDate();
+
+      // Empty cells before 1st
+      for (let i = 0; i < firstDay; i++) {
+        const empty = document.createElement("div");
+        empty.className = "date empty";
+        calendarGrid.appendChild(empty);
+      }
+
+      // Days of the month
+      for (let day = 1; day <= totalDays; day++) {
+        const dateEl = document.createElement("div");
+        dateEl.className = "date";
+        dateEl.textContent = day;
+        calendarGrid.appendChild(dateEl);
+      }
+    }
+
+    function changeMonth(offset) {
+      month += offset;
+      if (month < 0) {
+        month = 11;
+        year--;
+      } else if (month > 11) {
+        month = 0;
+        year++;
+      }
+      renderCalendar(month, year);
+    }
+
+    renderCalendar(month, year);
+  </script>
+</body>
+</html>
