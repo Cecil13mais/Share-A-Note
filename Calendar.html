@@ -3,17 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Reminder Calendar</title>
+  <title>Calendar</title>
   <style>
     body {
-      background: #f4f4f4;
       font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
     }
 
     .container {
-      max-width: 700px;
-      margin: 60px auto;
-      background: #fff;
+      max-width: 900px;
+      margin: 40px auto;
+      background: white;
       padding: 30px;
       border-radius: 10px;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
@@ -21,50 +23,102 @@
 
     h1 {
       text-align: center;
-      margin-bottom: 30px;
-      color: #333;
+      margin-bottom: 20px;
     }
 
-    .months {
+    .calendar {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      grid-template-columns: repeat(7, 1fr);
       gap: 10px;
     }
 
-    .months a {
-      background: #eaeaea;
-      border-radius: 8px;
-      padding: 10px;
+    .day {
       text-align: center;
-      text-decoration: none;
-      color: #333;
-      font-size: 1em;
-      display: block;
-      transition: background 0.3s ease;
+      font-weight: bold;
+      color: #444;
     }
 
-    .months a:hover {
-      background: #d0d0d0;
+    .date {
+      background: #e2e8f0;
+      text-align: center;
+      padding: 15px;
+      border-radius: 5px;
+    }
+
+    .empty {
+      background: none;
+    }
+
+    .back-link {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .back-link a {
+      color: #2f855a;
+      text-decoration: none;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Reminder Calendar</h1>
-    <div class="months">
-      <a href="calendar.html?month=0">January</a>
-      <a href="calendar.html?month=1">February</a>
-      <a href="calendar.html?month=2">March</a>
-      <a href="calendar.html?month=3">April</a>
-      <a href="calendar.html?month=4">May</a>
-      <a href="calendar.html?month=5">June</a>
-      <a href="calendar.html?month=6">July</a>
-      <a href="calendar.html?month=7">August</a>
-      <a href="calendar.html?month=8">September</a>
-      <a href="calendar.html?month=9">October</a>
-      <a href="calendar.html?month=10">November</a>
-      <a href="calendar.html?month=11">December</a>
+    <h1 id="calendarTitle">Calendar</h1>
+    <div class="calendar" id="calendarGrid"></div>
+    <div class="back-link">
+      <a href="index.html">← Back to Months</a>
     </div>
   </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const month = parseInt(params.get("month")) || new Date().getMonth();
+    const year = new Date().getFullYear();
+
+    const calendarTitle = document.getElementById("calendarTitle");
+    const calendarGrid = document.getElementById("calendarGrid");
+
+    const monthNames = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+
+    const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+    function renderCalendar(month, year) {
+      calendarTitle.textContent = `${monthNames[month]} ${year}`;
+
+      // Clear existing calendar
+      calendarGrid.innerHTML = "";
+
+      // Render days of week
+      for (let day of daysOfWeek) {
+        const dayEl = document.createElement("div");
+        dayEl.className = "day";
+        dayEl.textContent = day;
+        calendarGrid.appendChild(dayEl);
+      }
+
+      const firstDay = new Date(year, month, 1).getDay();
+      const totalDays = new Date(year, month + 1, 0).getDate();
+
+      // Empty cells before 1st
+      for (let i = 0; i < firstDay; i++) {
+        const empty = document.createElement("div");
+        empty.className = "date empty";
+        calendarGrid.appendChild(empty);
+      }
+
+      // Dates of the month
+      for (let i = 1; i <= totalDays; i++) {
+        const dateEl = document.createElement("div");
+        dateEl.className = "date";
+        dateEl.textContent = i;
+        calendarGrid.appendChild(dateEl);
+      }
+    }
+
+    renderCalendar(month, year);
+  </script>
 </body>
 </html>
