@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calendar - Share A Note</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f7fafc;
+    }
+
+    .header {
+      background: #2f855a;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .calendar {
+      max-width: 900px;
+      margin: 30px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .calendar h2 {
+      text-align: center;
+      color: #2f855a;
+    }
+
+    .days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      margin-top: 20px;
+      gap: 10px;
+      text-align: center;
+    }
+
+    .day {
+      padding: 20px;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      background: #edf2f7;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      position: relative;
+    }
+
+    .day:hover {
+      background: #c6f6d5;
+    }
+
+    .note {
+      font-size: 0.8rem;
+      color: #2f855a;
+      margin-top: 8px;
+    }
+
+    #taskModal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      display: none;
+      z-index: 1000;
+    }
+
+    #taskModal input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    #taskModal button {
+      padding: 10px 20px;
+      margin-right: 10px;
+    }
+
+    #overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      z-index: 999;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Share A Note</h1>
+    <p>Interactive Assignment Calendar</p>
+  </div>
+
+  <div class="calendar">
+    <h2>July 2025</h2>
+    <div class="days" id="calendarDays">
+      <!-- Days will be injected by JavaScript -->
+    </div>
+  </div>
+
+  <div id="overlay"></div>
+  <div id="taskModal">
+    <h3>Add Task for Day <span id="selectedDay"></span></h3>
+    <input type="text" id="taskInput" placeholder="Task description..." />
+    <div>
+      <button onclick="saveTask()">Save</button>
+      <button onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+
+  <script>
+    const calendarDays = document.getElementById("calendarDays");
+    const taskModal = document.getElementById("taskModal");
+    const overlay = document.getElementById("overlay");
+    const selectedDaySpan = document.getElementById("selectedDay");
+    const taskInput = document.getElementById("taskInput");
+    let selectedDay = null;
+
+    for (let i = 1; i <= 31; i++) {
+      const dayDiv = document.createElement("div");
+      dayDiv.classList.add("day");
+      dayDiv.dataset.day = i;
+      dayDiv.innerHTML = i;
+      dayDiv.onclick = () => openModal(i, dayDiv);
+      calendarDays.appendChild(dayDiv);
+    }
+
+    function openModal(day, element) {
+      selectedDay = element;
+      selectedDaySpan.textContent = day;
+      taskInput.value = "";
+      taskModal.style.display = "block";
+      overlay.style.display = "block";
+    }
+
+    function closeModal() {
+      taskModal.style.display = "none";
+      overlay.style.display = "none";
+    }
+
+    function saveTask() {
+      const task = taskInput.value.trim();
+      if (task && selectedDay) {
+        const note = document.createElement("div");
+        note.className = "note";
+        note.textContent = task;
+        selectedDay.appendChild(note);
+      }
+      closeModal();
+    }
+  </script>
+</body>
+</html>
