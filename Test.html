@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Share A Note - Academic Collaboration Platform</title>
+  <style>
+    /* Global Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #38a169;
+      --primary-dark: #2f855a;
+      --secondary: #3182ce;
+      --light: #f0fff4;
+      --dark: #22543d;
+      --text: #2d3748;
+      --background: #f8f9fa;
+      --white: #ffffff;
+      --gray: #e2e8f0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--text);
+      background-color: var(--background);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    section {
+      padding: 60px 0;
+    }
+
+    h1, h2, h3, h4 {
+      color: var(--dark);
+      margin-bottom: 1rem;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+    }
+
+    .btn {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      padding: 12px 30px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-secondary {
+      background: var(--secondary);
+    }
+
+    /* Header Styles */
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 20px 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo i {
+      margin-right: 10px;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+
+    .nav-links li {
+      margin-left: 30px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--light);
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(rgba(56, 161, 105, 0.9), rgba(47, 133, 90, 0.9)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%232f855a"/><path d="M0 50 Q 25 30, 50 50 T 100 50" fill="none" stroke="%2338a169" stroke-width="2"/></svg>');
+      background-size: cover;
+      color: white;
+      text-align: center;
+      padding: 100px 0;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      color: white;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 1.5rem;
+      max-width: 700px;
+      margin: 0 auto 40px;
+    }
+
+    /* Features Section */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .feature-card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-icon {
+      background: var(--light);
+      color: var(--primary);
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    /* User Tasks Section */
+    .tasks {
+      background: var(--light);
+    }
+
+    .task-list {
+      list-style: none;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .task-list li {
+      background: var(--white);
+      padding: 25px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .task-number {
+      background: var(--primary);
+      color: white;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-right: 20px;
+      flex-shrink: 0;
+    }
+
+    /* How It Works */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .step {
+      position: relative;
+    }
+
+    .step:not(:last-child):after {
+      content: "→";
+      position: absolute;
+      top: 40px;
+      right: -25px;
+      font-size: 2rem;
+      color: var(--primary);
+    }
+
+    .step-number {
+      background: var(--primary);
+      color: white;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin: 0 auto 20px;
+    }
+
+    /* Team Section */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .team-member {
+      text-align: center;
+      background: var(--white);
+      padding: 30px 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .member-image {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: var(--light);
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      color: var(--primary);
+    }
+
+    /* CTA Section */
+    .cta {
+      text-align: center;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+    }
+
+    .cta h2 {
+      color: white;
+    }
+
+    .cta p {
+      max-width: 700px;
+      margin: 0 auto 30px;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--dark);
+      color: white;
+      padding: 40px 0 20px;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-bottom: 30px;
+    }
+
+    .footer-section h3 {
+      color: var(--light);
+      margin-bottom: 20px;
+      font-size: 1.3rem;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      color: var(--gray);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: white;
+    }
+
+    .copyright {
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--gray);
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero p {
+        font-size: 1.2rem;
+      }
+
+      .step:not(:last-child):after {
+        display: none;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">
+          <i class="fas fa-share-alt"></i>
+          <span>Share A Note</span>
+        </div>
+        <ul class="nav-links">
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="#team">Our Team</a></li>
+          <li><a href="Login.html" class="btn">Login</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <h1>Collaborate, Organize, Succeed Together</h1>
+      <p>Share A Note helps students manage group assignments, track contributions, and meet deadlines with ease.</p>
+      <div class="hero-buttons">
+        <a href="Login.html" class="btn">Get Started</a>
+        <a href="#features" class="btn btn-secondary">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="features">
+    <div class="container">
+      <h2>Powerful Features for Academic Success</h2>
+      <p class="section-description">Designed specifically for student collaboration and project management</p>
+      
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-calendar-alt"></i>
+          </div>
+          <h3>Interactive Calendar</h3>
+          <p>Visualize all assignment due dates for both individual and group work in one place. Never miss another deadline.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-tasks"></i>
+          </div>
+          <h3>Contribution Tracking</h3>
+          <p>Record who did what, when, and track progress. Maintain accountability and transparency in group projects.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-history"></i>
+          </div>
+          <h3>Task History</h3>
+          <p>Access detailed histories of project progress and individual contributions with version control.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <h3>Progress Monitoring</h3>
+          <p>Mark tasks as completed to track overall progress and identify unfinished work at a glance.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-comments"></i>
+          </div>
+          <h3>Collaboration Hub</h3>
+          <p>Share notes, files, and comments related to assignments directly within your project workspace.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-bell"></i>
+          </div>
+          <h3>Smart Notifications</h3>
+          <p>Get timely reminders for upcoming deadlines and pending tasks to stay on top of your workload.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- User Tasks Section -->
+  <section class="tasks">
+    <div class="container">
+      <h2>Key Student Tasks Made Simple</h2>
+      <p>Share A Note helps students accomplish what matters most in group projects</p>
+      
+      <ul class="task-list">
+        <li>
+          <div class="task-number">1</div>
+          <div>
+            <h3>View Assignment Due Dates</h3>
+            <p>See all upcoming deadlines for both individual and group work on an interactive calendar that gives you a clear overview of your academic responsibilities.</p>
+          </div>
+        </li>
+        
+        <li>
+          <div class="task-number">2</div>
+          <div>
+            <h3>Record Contributions</h3>
+            <p>Log personal and group inputs to assignments with version control, documenting what work was completed, when it was done, and who was responsible.</p>
+          </div>
+        </li>
+        
+        <li>
+          <div class="task-number">3</div>
+          <div>
+            <h3>Access Task Histories</h3>
+            <p>Select calendar events to view detailed task histories that provide a clear breakdown of project progress and individual responsibilities.</p>
+          </div>
+        </li>
+        
+        <li>
+          <div class="task-number">4</div>
+          <div>
+            <h3>Track Completion Status</h3>
+            <p>Mark tasks as completed to help teams monitor overall progress and identify unfinished work, ensuring nothing slips through the cracks.</p>
+          </div>
+        </li>
+        
+        <li>
+          <div class="task-number">5</div>
+          <div>
+            <h3>Collaborate Seamlessly</h3>
+            <p>Share notes, files, and comments related to assignments directly on the platform, maintaining an organized and centralized workflow for all team members.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section id="how-it-works">
+    <div class="container">
+      <h2>How Share A Note Works</h2>
+      <p>Simple steps to academic collaboration success</p>
+      
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Create Project</h3>
+          <p>Start a new project and invite your team members</p>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Add Tasks</h3>
+          <p>Break down assignments into manageable tasks with deadlines</p>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Track Progress</h3>
+          <p>Team members log contributions and update task status</p>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">4</div>
+          <h3>Collaborate</h3>
+          <p>Share files, notes, and feedback directly in the platform</p>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">5</div>
+          <h3>Submit & Review</h3>
+          <p>Complete assignments and review team performance</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section id="team" class="team">
+    <div class="container">
+      <h2>Our Development Team</h2>
+      <p>The students behind Share A Note</p>
+      
+      <div class="team-grid">
+        <div class="team-member">
+          <div class="member-image">
+            <i class="fas fa-user"></i>
+          </div>
+          <h3>Cecil Mais</h3>
+          <p>Project Lead</p>
+        </div>
+        
+        <div class="team-member">
+          <div class="member-image">
+            <i class="fas fa-user"></i>
+          </div>
+          <h3>David Morales</h3>
+          <p>UX Designer</p>
+        </div>
+        
+        <div class="team-member">
+          <div class="member-image">
+            <i class="fas fa-user"></i>
+          </div>
+          <h3>Mumin Tahir</h3>
+          <p>Backend Developer</p>
+        </div>
+        
+        <div class="team-member">
+          <div class="member-image">
+            <i class="fas fa-user"></i>
+          </div>
+          <h3>Giovanni Alvarez</h3>
+          <p>Frontend Developer</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta">
+    <div class="container">
+      <h2>Ready to Transform Your Group Work?</h2>
+      <p>Join thousands of students who are already using Share A Note to collaborate effectively and achieve academic success together.</p>
+      <a href="Login.html" class="btn">Get Started Now</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="logo">
+            <i class="fas fa-share-alt"></i>
+            <span>Share A Note</span>
+          </div>
+          <p>Empowering students to collaborate effectively and achieve academic success through organized project management.</p>
+        </div>
+        
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#team">Our Team</a></li>
+            <li><a href="Login.html">Login</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h3>Connect With Us</h3>
+          <ul class="footer-links">
+            <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+            <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+            <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+            <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="copyright">
+        <p>&copy; 2023 Share A Note. Created by HCI Group 10. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+    
+    // Simple animation for feature cards on scroll
+    const featureCards = document.querySelectorAll('.feature-card');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = 1;
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    featureCards.forEach(card => {
+      card.style.opacity = 0;
+      card.style.transform = 'translateY(20px)';
+      card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      observer.observe(card);
+    });
+  </script>
+</body>
+</html>
