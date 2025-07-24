@@ -3,98 +3,101 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Share A Note - Dashboard</title>
+  <title>Login - Share A Note</title>
   <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      background: #f0fff4;
       font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
+      background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
     .banner {
-      background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
-      padding: 40px 0;
       text-align: center;
+      padding: 40px 0 20px;
       color: white;
     }
 
     .banner h1 {
       font-size: 3rem;
-      margin: 0;
     }
 
-    .intro {
-      text-align: center;
-      padding: 20px;
-      max-width: 700px;
+    .login-container {
+      max-width: 400px;
       margin: auto;
+      background: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
       color: #2f855a;
     }
 
-    .container {
-      max-width: 800px;
-      margin: 30px auto;
-      padding: 20px;
-      display: grid;
-      gap: 20px;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    }
-
-    .card {
-      background: white;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-      text-align: center;
-      transition: 0.3s;
-    }
-
-    .card:hover {
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-    }
-
-    .card a {
-      color: #22543d;
-      text-decoration: none;
+    label {
       font-weight: bold;
       display: block;
-      margin-top: 10px;
+      margin: 10px 0 5px;
     }
 
-    @media (max-width: 600px) {
-      .banner h1 {
-        font-size: 2rem;
-      }
+    input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 20px;
+      background: #2f855a;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #276749;
+    }
+
+    .footer-text {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    .footer-text a {
+      color: #2f855a;
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
   <div class="banner">
     <h1>Share A Note</h1>
+    <p>Please log in to continue</p>
   </div>
 
-  <div class="intro">
-    <p>Stay organized with shared task tracking, interactive calendars, and team collaboration features for students.</p>
-  </div>
+  <div class="login-container">
+    <h2>Login</h2>
+    <label for="username">Email or Username</label>
+    <input type="text" id="username" name="username" required />
 
-  <div class="container">
-    <div class="card">
-      <h3>Interactive Calendar</h3>
-      <a href="calendar.html">View Calendar</a>
-    </div>
-    <div class="card">
-      <h3>Log Tasks</h3>
-      <a href="#">Add a New Task</a>
-    </div>
-    <div class="card">
-      <h3>Team Progress</h3>
-      <a href="#">View Contributions</a>
-    </div>
-    <div class="card">
-      <h3>Shared Notes</h3>
-      <a href="#">Access Notes</a>
-    </div>
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" required />
+
+    <button onclick="location.href='index.html'">Login</button>
+    <p class="footer-text">Don't have an account? <a href="#">Sign up here</a></p>
   </div>
 </body>
 </html>
