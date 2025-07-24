@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calendar - Share A Note</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f7fafc;
+    }
+
+    .header {
+      background: #2f855a;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .calendar {
+      max-width: 900px;
+      margin: 30px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .calendar h2 {
+      text-align: center;
+      color: #2f855a;
+    }
+
+    .days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      margin-top: 20px;
+      gap: 10px;
+      text-align: center;
+    }
+
+    .day {
+      padding: 20px;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      background: #edf2f7;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .day:hover {
+      background: #c6f6d5;
+    }
+
+    .note {
+      font-size: 0.8rem;
+      color: #2f855a;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Share A Note</h1>
+    <p>Interactive Assignment Calendar</p>
+  </div>
+
+  <div class="calendar">
+    <h2>July 2025</h2>
+    <div class="days">
+      <div class="day">1</div>
+      <div class="day">2</div>
+      <div class="day">3</div>
+      <div class="day">4 <div class="note">Group Project Due</div></div>
+      <div class="day">5</div>
+      <div class="day">6</div>
+      <div class="day">7</div>
+    </div>
+  </div>
+</body>
+</html>
