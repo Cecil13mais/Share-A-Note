@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Share A Note - Reminder Calendar</title>
+  <title>Share A Note - Dashboard</title>
   <style>
     body {
       background: #f0fff4;
@@ -17,7 +17,6 @@
       padding: 40px 0;
       text-align: center;
       color: white;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
     .banner h1 {
@@ -25,43 +24,45 @@
       margin: 0;
     }
 
-    .container {
-      max-width: 700px;
-      margin: 40px auto;
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
-    }
-
-    h2 {
+    .intro {
       text-align: center;
-      margin-bottom: 20px;
+      padding: 20px;
+      max-width: 700px;
+      margin: auto;
       color: #2f855a;
     }
 
-    .months {
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 20px;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-      gap: 15px;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     }
 
-    .months a {
-      background: #c6f6d5;
-      color: #22543d;
-      padding: 15px 0;
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
       text-align: center;
-      border-radius: 8px;
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .card a {
+      color: #22543d;
       text-decoration: none;
       font-weight: bold;
-      transition: background 0.3s ease;
+      display: block;
+      margin-top: 10px;
     }
 
-    .months a:hover {
-      background: #9ae6b4;
-    }
-
-    @media (max-width: 500px) {
+    @media (max-width: 600px) {
       .banner h1 {
         font-size: 2rem;
       }
@@ -73,21 +74,26 @@
     <h1>Share A Note</h1>
   </div>
 
+  <div class="intro">
+    <p>Stay organized with shared task tracking, interactive calendars, and team collaboration features for students.</p>
+  </div>
+
   <div class="container">
-    <h2>Select a Month</h2>
-    <div class="months">
-      <a href="calendar.html?month=0">January</a>
-      <a href="calendar.html?month=1">February</a>
-      <a href="calendar.html?month=2">March</a>
-      <a href="calendar.html?month=3">April</a>
-      <a href="calendar.html?month=4">May</a>
-      <a href="calendar.html?month=5">June</a>
-      <a href="calendar.html?month=6">July</a>
-      <a href="calendar.html?month=7">August</a>
-      <a href="calendar.html?month=8">September</a>
-      <a href="calendar.html?month=9">October</a>
-      <a href="calendar.html?month=10">November</a>
-      <a href="calendar.html?month=11">December</a>
+    <div class="card">
+      <h3>Interactive Calendar</h3>
+      <a href="calendar.html">View Calendar</a>
+    </div>
+    <div class="card">
+      <h3>Log Tasks</h3>
+      <a href="#">Add a New Task</a>
+    </div>
+    <div class="card">
+      <h3>Team Progress</h3>
+      <a href="#">View Contributions</a>
+    </div>
+    <div class="card">
+      <h3>Shared Notes</h3>
+      <a href="#">Access Notes</a>
     </div>
   </div>
 </body>
