@@ -1,8 +1,282 @@
-<form action="https://docs.google.com/forms/d/e/FORM_ID/formResponse" method="POST" target="_blank">
-  <label>Reps Name:</label>
-  <input type="text" name="entry.XXXXXX" required><br>
-  <label>Business Name:</label>
-  <input type="text" name="entry.YYYYYY" required><br>
-  <!-- Add fields using the specific entry IDs you actually capture -->
-  <button type="submit">Submit</button>
-</form>
+import React, { useEffect, useMemo, useRef, useState } from "react";
+
+// 🎉 Gender Reveal Landing Page with Countdown to Thanksgiving (USA)
+// - TailwindCSS for styling (no import required in this environment)
+// - Framer Motion–style micro-animations via CSS keyframes
+// - Simple confetti animation when the countdown hits zero or on reveal
+// - Easy to customize: update the couple names, venue, RSVP/Registry links, and target time below
+
+export default function GenderRevealThanksgiving() {
+  // ====== CONFIG: Update these to personalize ======
+  const COUPLE = "Cecil & Partner"; // your names
+  const EVENT_TITLE = "Gender Reveal";
+  const LOCATION = "Family & Friends"; // optional subtitle
+  // Countdown target: Thanksgiving Day (USA) 2025 at 12:00 PM (noon) Eastern Time
+  // You can change the time or timezone offset if needed.
+  const TARGET_ISO = "2025-11-27T12:00:00-05:00"; // EST (post-DST)
+  const RSVP_LINK = "#"; // e.g., https://forms.gle/...
+  const REGISTRY_LINK = "#"; // optional
+  // ================================================
+
+  const targetDate = useMemo(() => new Date(TARGET_ISO), [TARGET_ISO]);
+  const [now, setNow] = useState(() => new Date());
+  const [revealed, setRevealed] = useState(false);
+  const [isFinished, setIsFinished] = useState(false);
+
+  // Tick every second
+  useEffect(() => {
+    const id = setInterval(() => setNow(new Date()), 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  const diffMs = Math.max(0, targetDate.getTime() - now.getTime());
+  const totalSeconds = Math.floor(diffMs / 1000);
+  const days = Math.floor(totalSeconds / (3600 * 24));
+  const hours = Math.floor((totalSeconds % (3600 * 24)) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  useEffect(() => {
+    if (!isFinished && diffMs === 0) {
+      setIsFinished(true);
+      triggerConfetti();
+    }
+  }, [diffMs, isFinished]);
+
+  // Simple confetti using absolutely-positioned dots
+  const confettiRef = useRef<HTMLDivElement | null>(null);
+  const triggerConfetti = () => {
+    const container = confettiRef.current;
+    if (!container) return;
+
+    const count = 120;
+    for (let i = 0; i < count; i++) {
+      const span = document.createElement("span");
+      span.className = "confetti";
+      // random horizontal start
+      span.style.left = Math.random() * 100 + "%";
+      // random size
+      const size = 6 + Math.random() * 8;
+      span.style.width = `${size}px`;
+      span.style.height = `${size}px`;
+      // random delay & duration
+      const duration = 2500 + Math.random() * 2000;
+      const delay = Math.random() * 300;
+      span.style.animationDuration = duration + "ms";
+      span.style.animationDelay = delay + "ms";
+      container.appendChild(span);
+      // cleanup
+      setTimeout(() => span.remove(), duration + delay + 200);
+    }
+  };
+
+  const zeroPad = (n: number) => n.toString().padStart(2, "0");
+
+  return (
+    <main className="min-h-screen bg-gradient-to-b from-sky-50 to-white text-slate-800">
+      {/* Header / Hero */}
+      <section className="relative overflow-hidden">
+        <div className="absolute -top-32 -right-20 w-72 h-72 bg-pink-200/40 rounded-full blur-3xl" />
+        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-blue-200/40 rounded-full blur-3xl" />
+
+        <header className="max-w-5xl mx-auto px-6 pt-16 pb-10 text-center">
+          <p className="tracking-widest text-sm text-slate-500 uppercase">{EVENT_TITLE}</p>
+          <h1 className="mt-2 text-4xl md:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-pink-600 via-fuchsia-600 to-blue-600">
+            Countdown to Thanksgiving
+          </h1>
+          <p className="mt-4 text-lg md:text-xl text-slate-600">
+            {COUPLE} &middot; {LOCATION}
+          </p>
+
+          {/* Countdown Cards */}
+          <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <TimeCard label="Days" value={days} />
+            <TimeCard label="Hours" value={hours} />
+            <TimeCard label="Minutes" value={minutes} />
+            <TimeCard label="Seconds" value={seconds} />
+          </div>
+
+          {/* CTA Buttons */}
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
+            <a
+              href={RSVP_LINK}
+              className="px-5 py-3 rounded-2xl shadow-sm bg-slate-900 text-white hover:opacity-90 transition"
+            >
+              RSVP
+            </a>
+            <a
+              href={REGISTRY_LINK}
+              className="px-5 py-3 rounded-2xl shadow-sm bg-white border border-slate-200 hover:bg-slate-50 transition"
+            >
+              View Registry
+            </a>
+            <button
+              onClick={() => {
+                setRevealed((r) => !r);
+                triggerConfetti();
+              }}
+              className="px-5 py-3 rounded-2xl shadow-sm bg-gradient-to-r from-pink-500 to-blue-500 text-white hover:opacity-95 transition"
+            >
+              {revealed ? "Hide the Surprise" : "Tap to Reveal"}
+            </button>
+          </div>
+
+          {/* Surprise Text */}
+          {revealed && (
+            <div className="mt-6 text-3xl md:text-4xl font-bold">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-fuchsia-600 to-blue-600">
+                It's a... 💖💙
+              </span>
+            </div>
+          )}
+
+          {/* Confetti layer */}
+          <div ref={confettiRef} className="pointer-events-none fixed inset-0 z-50" aria-hidden="true" />
+        </header>
+      </section>
+
+      {/* Details Section */}
+      <section className="max-w-5xl mx-auto px-6 pb-24">
+        <div className="grid md:grid-cols-2 gap-6 mt-6">
+          <Card>
+            <h3 className="text-xl font-semibold">When</h3>
+            <p className="mt-2 text-slate-600">
+              Thanksgiving Day &middot; Thursday, November 27, 2025 &middot; 12:00 PM ET
+            </p>
+            <AddToCalendar dateIso={TARGET_ISO} title={`${EVENT_TITLE} for ${COUPLE}`} />
+          </Card>
+
+          <Card>
+            <h3 className="text-xl font-semibold">Where</h3>
+            <p className="mt-2 text-slate-600">Add your venue or livestream link here.</p>
+          </Card>
+
+          <Card>
+            <h3 className="text-xl font-semibold">Dress Code</h3>
+            <p className="mt-2 text-slate-600">Wear pink or blue to cast your vote!</p>
+          </Card>
+
+          <Card>
+            <h3 className="text-xl font-semibold">Notes</h3>
+            <ul className="mt-2 text-slate-600 list-disc list-inside space-y-1">
+              <li>Arrive 15 minutes early for photos.</li>
+              <li>Snacks and refreshments provided.</li>
+              <li>Kids welcome.</li>
+            </ul>
+          </Card>
+        </div>
+      </section>
+
+      <Footer />
+
+      {/* CSS for confetti & subtle animations */}
+      <style>{`
+        @keyframes floatUp {
+          0% { transform: translateY(8px); opacity: .9; }
+          100% { transform: translateY(-8px); opacity: 1; }
+        }
+        @keyframes confettiFall {
+          0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+          100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+        }
+        .confetti {
+          position: absolute;
+          top: -20px;
+          background: linear-gradient(135deg, #ec4899, #3b82f6);
+          border-radius: 3px;
+          animation-name: confettiFall;
+          animation-timing-function: linear;
+          will-change: transform, opacity;
+        }
+      `}</style>
+    </main>
+  );
+}
+
+function TimeCard({ label, value }: { label: string; value: number }) {
+  return (
+    <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 text-center animate-[floatUp_2s_ease-in-out_infinite_alternate]">
+      <div className="text-4xl md:text-5xl font-extrabold tabular-nums">
+        {String(value).padStart(2, "0")}
+      </div>
+      <div className="mt-1 text-sm tracking-wide text-slate-500 uppercase">{label}</div>
+    </div>
+  );
+}
+
+function Card({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+      {children}
+    </div>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="border-t border-slate-200/70 bg-white/70 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+      <div className="max-w-5xl mx-auto px-6 py-8 text-sm text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-2">
+        <p>
+          © {new Date().getFullYear()} {" "}
+          <span className="font-medium">{`${/* Keep footer adaptable */''}`}</span>
+          <span>Made with 💖💙</span>
+        </p>
+        <p>Thanksgiving target: Thu, Nov 27, 2025 · 12:00 PM ET</p>
+      </div>
+    </footer>
+  );
+}
+
+function AddToCalendar({ dateIso, title }: { dateIso: string; title: string }) {
+  // Generate a downloadable ICS file on the fly
+  const makeIcs = () => {
+    const start = new Date(dateIso);
+    // default 2-hour window
+    const end = new Date(start.getTime() + 2 * 60 * 60 * 1000);
+
+    const toICSDate = (d: Date) =>
+      d
+        .toISOString()
+        .replace(/[-:]/g, "")
+        .replace(/\.\d{3}Z$/, "Z");
+
+    const ics = [
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "PRODID:-//Gender Reveal//Thanksgiving Countdown//EN",
+      "CALSCALE:GREGORIAN",
+      "METHOD:PUBLISH",
+      "BEGIN:VEVENT",
+      `DTSTART:${toICSDate(start)}`,
+      `DTEND:${toICSDate(end)}`,
+      `DTSTAMP:${toICSDate(new Date())}`,
+      `SUMMARY:${escapeIcs(title)}`,
+      "DESCRIPTION:Countdown reveal!",
+      "END:VEVENT",
+      "END:VCALENDAR",
+    ].join("\r\n");
+
+    const blob = new Blob([ics], { type: "text/calendar" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "gender-reveal-thanksgiving.ics";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  };
+
+  return (
+    <button
+      onClick={makeIcs}
+      className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-sm"
+    >
+      Add to Calendar
+    </button>
+  );
+}
+
+function escapeIcs(str: string) {
+  return str.replace(/\\/g, "\\\\").replace(/\n/g, "\\n").replace(/,|;/g, (m) => `\\${m}`);
+}
